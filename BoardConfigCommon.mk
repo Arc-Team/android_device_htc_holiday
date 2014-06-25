@@ -14,7 +14,7 @@
 
 BOARD_VENDOR := htc
 
-TARGET_SPECIFIC_HEADER_PATH := device/htc/msm8660-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/htc/holiday/include
 
 # Bootloader
 TARGET_NO_BOOTLOADER := true
@@ -55,8 +55,8 @@ BOARD_QCOM_VOIP_ENABLED := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_BLUEDROID_VENDOR_CONF := device/htc/msm8660-common/bluetooth/vnd_msm8660.txt
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/htc/msm8660-common/bluetooth/include
+BOARD_BLUEDROID_VENDOR_CONF := device/htc/holiday/bluetooth/vnd_msm8660.txt
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/htc/holiday/bluetooth/include
 
 # Camera
 BOARD_USES_QCOM_LEGACY_CAM_PARAMS := true
@@ -91,7 +91,7 @@ BOARD_USE_MHEAP_SCREENSHOT := true
 TARGET_ENABLE_AV_ENHANCEMENTS := true
 TARGET_USES_POST_PROCESSING := true
 TARGET_USES_C2D_COMPOSITION := true
-BOARD_EGL_CFG := device/htc/msm8660-common/configs/egl.cfg
+BOARD_EGL_CFG := device/htc/holiday/configs/egl.cfg
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 # Lights
@@ -103,14 +103,14 @@ TARGET_PROVIDES_LIBLIGHTS := true
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Hardware tunables
-BOARD_HARDWARE_CLASS := device/htc/msm8660-common/cmhw
+BOARD_HARDWARE_CLASS := device/htc/holiday/cmhw
 
 # Recovery
 USE_SET_METADATA := false
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
-    device/htc/msm8660-common/sepolicy
+    device/htc/holiday/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     app.te \

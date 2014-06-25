@@ -25,7 +25,7 @@
 # against the traditional rules of inheritance).
 
 # inherit from common msm8660
--include device/htc/msm8660-common/BoardConfigCommon.mk
+-include device/htc/holiday/BoardConfigCommon.mk
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := holiday
@@ -49,7 +49,7 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := holiday
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
 
 # Wifi
--include device/htc/msm8660-common/bcmdhd.mk
+-include device/htc/holiday/bcmdhd.mk
 
 # FileSystem
 TARGET_USERIMAGES_USE_EXT4 := true

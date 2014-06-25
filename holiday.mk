@@ -15,7 +15,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit common msm8660 configs
-$(call inherit-product, device/htc/msm8660-common/msm8660.mk)
+$(call inherit-product, device/htc/holiday/msm8660.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/htc/holiday/overlay
 
@@ -35,7 +35,7 @@ PRODUCT_PACKAGES += \
    e2fsck
 
 # Bluetooth
-$(call inherit-product, device/htc/msm8660-common/bcm_hcd.mk)
+$(call inherit-product, device/htc/holiday/bcm_hcd.mk)
 
 # Wifi
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
@@ -155,7 +155,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_TAGS += dalvik.gc.type-precise
 
 # call the proprietary setup
-$(call inherit-product-if-exists, vendor/htc/holiday/holiday-vendor.mk)
+$(call inherit-product-if-exists, device/htc/holiday/holiday-vendor.mk)
 
 # media profiles and capabilities spec
 $(call inherit-product, device/htc/holiday/media_a1026.mk)

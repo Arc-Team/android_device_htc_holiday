@@ -14,8 +14,8 @@
 
 # Qualcomm scripts
 PRODUCT_COPY_FILES += \
-    device/htc/msm8660-common/prebuilt/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
-    device/htc/msm8660-common/prebuilt/init.qcom.efs.sync.sh:system/etc/init.qcom.efs.sync.sh
+    device/htc/holiday/prebuilt/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
+    device/htc/holiday/prebuilt/init.qcom.efs.sync.sh:system/etc/init.qcom.efs.sync.sh
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -106,18 +106,18 @@ PRODUCT_PACKAGES += \
 
 # Media configuration
 PRODUCT_COPY_FILES += \
-    device/htc/msm8660-common/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    device/htc/msm8660-common/configs/media_profiles.xml:system/etc/media_profiles.xml
+    device/htc/holiday/configs/media_codecs.xml:system/etc/media_codecs.xml \
+    device/htc/holiday/configs/media_profiles.xml:system/etc/media_profiles.xml
 
 # audio policy
 PRODUCT_COPY_FILES += \
-    device/htc/msm8660-common/configs/audio_policy.conf:system/etc/audio_policy.conf
+    device/htc/holiday/configs/audio_policy.conf:system/etc/audio_policy.conf
 
 # MSM8660 firmware
 PRODUCT_COPY_FILES += \
-    device/htc/msm8660-common/firmware/leia_pfp_470.fw:system/etc/firmware/leia_pfp_470.fw \
-    device/htc/msm8660-common/firmware/leia_pm4_470.fw:system/etc/firmware/leia_pm4_470.fw \
-    device/htc/msm8660-common/firmware/vidc_1080p.fw:system/etc/firmware/vidc_1080p.fw
+    device/htc/holiday/firmware/leia_pfp_470.fw:system/etc/firmware/leia_pfp_470.fw \
+    device/htc/holiday/firmware/leia_pm4_470.fw:system/etc/firmware/leia_pm4_470.fw \
+    device/htc/holiday/firmware/vidc_1080p.fw:system/etc/firmware/vidc_1080p.fw
 
 
 # Device uses high-density artwork where available
@@ -136,6 +136,3 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072 \
     ro.bq.gpu_to_cpu_unsupported=1 \
     debug.egl.recordable.rgba8888=1
-
-# call the proprietary setup
-$(call inherit-product-if-exists, vendor/htc/msm8660-common/msm8660-common-vendor.mk)
