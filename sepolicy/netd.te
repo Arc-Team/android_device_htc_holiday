@@ -1,0 +1,1 @@
+allow netd_tmpfs urandom_device:chr_file read;
