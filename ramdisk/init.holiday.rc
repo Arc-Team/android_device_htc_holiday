@@ -1,0 +1,430 @@
+import init.holiday.usb.rc
+
+on init
+    mkdir /mnt/media_rw 0770 media_rw media_rw
+    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
+    mkdir /storage/sdcard0 0700 root root
+    mkdir /storage/sdcard1 0700 root root
+    mkdir /storage/usbdisk 0700 root root
+
+    export EXTERNAL_STORAGE /storage/sdcard0
+    export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk0
+
+    # for backwards compatibility
+    symlink /storage/sdcard0 /sdcard
+    symlink /storage/sdcard0 /mnt/sdcard
+    symlink /storage/sdcard1 /external_sd
+    symlink /storage/sdcard1 /mnt/external_sd
+    symlink /storage/usbdisk0 /usbdisk0
+    symlink /storage/usbdisk0 /mnt/usbdisk0
+
+    chmod 0644 /proc/cmdline
+
+    # Dummy command to open() /dev/smd0 and not attempt to read any bytes from it
+    #
+    # This causes smd_tty_open() in arch/arm/mach-msm/smd_tty.c to load
+    # the modem firmware early. This is necessary to avoid a race condition
+    # where in-call audio dies if a phone call is made before initialization
+    # has finished.
+
+    exec /system/xbin/busybox dd if=/dev/smd0 of=/dev/null bs=1 count=1 skip=1
+ 
+on emmc-fs
+    mkdir /devlog 0700 root root
+
+    # msm8660: firmware
+    rm /vendor
+    mkdir /vendor                   0771 system system
+    mkdir /vendor/etc               0771 system system
+    mkdir /vendor/firmware          0771 system system
+    mkdir /vendor/firmware/misc     0771 system system
+    mkdir /vendor/firmware/adsp     0771 system system
+    mkdir /vendor/firmware/misc_mdm 0771 system system
+
+    # mount the whole thing
+    mount_all fstab.holiday
+
+    chown radio diag /dev/block/mmcblk0p16
+    chmod 0460 /dev/block/mmcblk0p16
+
+    symlink /vendor/firmware/adsp/q6.b07 /vendor/firmware/q6.b07
+    symlink /vendor/firmware/adsp/q6.b06 /vendor/firmware/q6.b06
+    symlink /vendor/firmware/adsp/q6.b05 /vendor/firmware/q6.b05
+    symlink /vendor/firmware/adsp/q6.b04 /vendor/firmware/q6.b04
+    symlink /vendor/firmware/adsp/q6.b03 /vendor/firmware/q6.b03
+    symlink /vendor/firmware/adsp/q6.b02 /vendor/firmware/q6.b02
+    symlink /vendor/firmware/adsp/q6.b01 /vendor/firmware/q6.b01
+    symlink /vendor/firmware/adsp/q6.b00 /vendor/firmware/q6.b00
+    symlink /vendor/firmware/adsp/q6.mdt /vendor/firmware/q6.mdt
+    symlink /vendor/firmware/misc/modem.b10 /vendor/firmware/modem.b10
+    symlink /vendor/firmware/misc/modem.b09 /vendor/firmware/modem.b09
+    symlink /vendor/firmware/misc/modem.b08 /vendor/firmware/modem.b08
+    symlink /vendor/firmware/misc/modem.b07 /vendor/firmware/modem.b07
+    symlink /vendor/firmware/misc/modem.b06 /vendor/firmware/modem.b06
+    symlink /vendor/firmware/misc/modem.b05 /vendor/firmware/modem.b05
+    symlink /vendor/firmware/misc/modem.b04 /vendor/firmware/modem.b04
+    symlink /vendor/firmware/misc/modem.b03 /vendor/firmware/modem.b03
+    symlink /vendor/firmware/misc/modem.b02 /vendor/firmware/modem.b02
+    symlink /vendor/firmware/misc/modem.b01 /vendor/firmware/modem.b01
+    symlink /vendor/firmware/misc/modem.b00 /vendor/firmware/modem.b00
+    symlink /vendor/firmware/misc/modem.mdt /vendor/firmware/modem.mdt
+
+    symlink /vendor/firmware/misc_mdm/image/amss.mbn /vendor/firmware/amss.mbn
+    symlink /vendor/firmware/misc_mdm/image/dsp1.mbn /vendor/firmware/dsp1.mbn
+    symlink /vendor/firmware/misc_mdm/image/dsp2.mbn /vendor/firmware/dsp2.mbn
+    symlink /vendor/firmware/misc_mdm/image/dbl.mbn /vendor/firmware/dbl.mbn
+    symlink /vendor/firmware/misc_mdm/image/osbl.mbn /vendor/firmware/osbl.mbn
+    symlink /vendor/firmware/misc_mdm/image/efs1.mbn /vendor/firmware/efs1.mbn
+    symlink /vendor/firmware/misc_mdm/image/efs2.mbn /vendor/firmware/efs2.mbn
+    symlink /vendor/firmware/misc_mdm/image/amss.mbn /vendor/firmware/amss.mbn
+    symlink /vendor/firmware/misc_mdm/image/htcssmem.mbn /vendor/firmware/htcssmem.mbn
+
+    # Force loading of modem and Q6 images
+    write /dev/smd_pkt_loopback 1
+
+    # Bluetooth Permissions
+    chown bluetooth bluetooth /dev/ttyHS0
+    chmod 0660 /dev/ttyHS0
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /sys/module/htc_bdaddress/parameters/bdaddress
+    setprop ro.bt.bdaddr_path /sys/module/htc_bdaddress/parameters/bdaddress
+
+    # Wifi Firmware
+    symlink /system/vendor/firmware/bcm4330.hcd /vendor/firmware/bcm4330.hcd
+    symlink /system/vendor/firmware/bcm4329.hcd /vendor/firmware/bcm4329.hcd
+    symlink /system/vendor/firmware/fw_bcmdhd.bin /vendor/firmware/fw_bcmdhd.bin
+    symlink /system/vendor/firmware/fw_bcmdhd_apsta.bin /vendor/firmware/fw_bcmdhd_apsta.bin
+    symlink /system/vendor/firmware/fw_bcmdhd_p2p.bin /vendor/firmware/fw_bcmdhd_p2p.bin
+
+    # TEMP HACK 
+    symlink /system/vendor/lib /vendor/lib
+
+on post-fs-data
+    # double check the perms and set owner
+    chown root root /devlog
+    chmod 0700 /devlog
+
+    # Set indication that we have finished previous actions
+    setprop vold.post_fs_done 1
+
+    #wait /dev/ttyHSL1
+    mkdir /data/qcks 0770 system system
+    exec /system/bin/logwrapper /system/bin/htc_ext4_fsck
+
+    mkdir /data/radio 0770 radio radio
+    chown radio system /sys/module/smd_rpcrouter/parameters/debug_mask
+    chown radio system /sys/module/rpcrouter_sdio_xprt/parameters/debug_mask
+
+    # audio
+    mkdir /data/audio 0775 media audio
+
+    # wifi
+
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+
+    mkdir /data/d 0777 system system
+    mount debugfs /data/d /data/d
+
+    # liblights
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/amber/brightness
+    chown system system /sys/class/leds/amber/blink
+    chown system system /sys/class/leds/button-backlight/brightness
+    chown system system /sys/class/leds/lcd-backlight/brightness
+    chown system system /sys/class/leds/keyboard-backlight/brightness
+    chown system system /sys/class/leds/func/brightness
+    chown system system /sys/class/leds/caps/brightness
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/red/off_timer
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/green/off_timer
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/blue/blink
+    chown system system /sys/class/leds/blue/off_timer
+    chown system system /sys/class/leds/amber/brightness
+    chown system system /sys/class/leds/amber/blink
+    chown system system /sys/class/leds/amber/off_timer
+    chown system system /sys/class/leds/button-backlight-portrait/brightness
+    chown system system /sys/class/leds/button-backlight-landscape/brightness
+    chown system system /sys/class/leds/amber-portrait/brightness
+    chown system system /sys/class/leds/green-portrait/brightness
+    chown system system /sys/class/leds/blue-portrait/brightness
+    chown system system /sys/class/leds/amber-landscape/brightness
+    chown system system /sys/class/leds/green-landscape/brightness
+    chown system system /sys/class/leds/blue-landscape/brightness
+    chown system system /sys/class/leds/sharekey/brightness
+    chown system system /sys/class/leds/sharekey/breath_times
+    chown system system /sys/class/leds/sharekey/breath_max_brightness
+    chown system system /sys/class/leds/charming-led/brightness
+    chown system system /sys/class/leds/charming-led/blink
+    chown system system /sys/class/leds/charming-led/off_timer
+    chown system system /sys/class/leds/flashlight/brightness
+    chown system system /sys/class/leds/caps/brightness
+    chown system system /sys/class/leds/func/brightness
+    chown media media /sys/class/leds/green-camera/brightness
+    chown system system /sys/devices/virtual/htc_accessory/fm/flag
+    chown system system /sys/devices/virtual/htc_accessory/tty/flag
+
+    # for modem link
+    chown system system /sys/module/serial/parameters/modem_enabled
+    chown system system /dev/ttyHSUSB0
+    chown system system /dev/ttySA0
+    chown system system /dev/smd9
+
+    # flashlight
+    chown system camera /sys/class/leds/flashlight/brightness
+    chmod 0666          /sys/class/leds/flashlight/brightness
+
+    # Kernel init script - kernel config
+    chmod 0777          /system/etc/init.d/99kernel
+
+    # for Flip to speaker
+    chown radio radio /sys/class/htc_accelerometer/accelerometer/PhoneOnOffFlag
+    chown radio radio /sys/class/htc_ecompass/ecompass/PhoneOnOffFlag
+
+    # for Optical sensors
+    chown system system /sys/class/optical_sensors/lightsensor/ls_adc
+    chown system system /sys/class/optical_sensors/lightsensor/ls_auto
+    chown system system /sys/class/optical_sensors/lightsensor/ls_kadc
+    chown system radio /sys/class/optical_sensors/proximity/ps_adc
+    chown system system /sys/class/optical_sensors/proximity/ps_kadc
+    chown system system /sys/class/optical_sensors/proximity/ps_led
+    chown system system /sys/class/optical_sensors/proximity/ps_test_mode
+
+    # Vibrator
+    chown system system sys/devices/platform/msm_ssbi.0/pm8058-core/pm8xxx-vib/amp
+    chmod 666 sys/devices/platform/msm_ssbi.0/pm8058-core/pm8xxx-vib/amp
+
+    # Set SUID bit for iproute2 ip tool
+    chmod 4755 /system/bin/ip
+
+    # port-bridge
+    chmod 0660 /dev/smd0
+    chown system system /dev/smd0
+
+    # for charging function
+    chown radio radio /sys/module/htc_battery_8x60/parameters/phone_call
+    chmod 0660 /sys/module/htc_battery_8x60/parameters/phone_call
+
+    # for Invense MPU3050
+    chmod 0664 /dev/mpu
+    chmod 0664 /dev/mpuirq
+    chmod 0664 /dev/timerirq
+    chown system system /dev/mpu
+    chown system system /dev/mpuirq
+    chown system system /dev/timerirq
+
+    symlink /mnt/sdcard/ext_sd /sdcard2
+
+# set diag permissions
+    chown radio radio /dev/diag
+    chown radio radio /dev/diag_mdm
+    chown radio radio /dev/htcdiag
+    chown radio radio /dev/diag_arm9
+    chown radio radio /dev/btdiag
+    chmod 0660 /dev/diag
+    chmod 0660 /dev/diag_mdm
+    chmod 0660 /dev/htcdiag
+    chmod 0660 /dev/diag_arm9
+    chmod 0660 /dev/btdiag
+
+    # allow interfaces to get v6 address when tethering is enabled
+    write /proc/sys/net/ipv6/conf/rmnet0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet1/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet2/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet3/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet4/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet5/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet6/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet7/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio0/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio1/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio2/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio3/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio4/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio5/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
+    write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
+
+    setprop net.tcp.buffersize.default 4096,87380,110208,4096,16384,110208
+    setprop net.tcp.buffersize.wifi    524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.hsdpa   4096,174760,1572864,4096,16384,110208
+    setprop net.tcp.buffersize.umts    4096,174760,1572864,4096,16384,110208
+    setprop net.tcp.buffersize.edge    4096,174760,1572864,4096,16384,35040
+    setprop net.tcp.buffersize.gprs    4096,174760,1572864,4096,8760,11680
+    setprop net.tcp.buffersize.lte     4096,221184,3461120,4096,221184,3461120
+    setprop net.tcp.buffersize.evdo_b  4094,87380,262144,4096,16384,262144
+    setprop net.tcp.buffersize.wimax   4096,221184,524288,4096,16384,110208
+
+# Services start here
+
+# Force loading of modem and Q6 images
+service load-modem /system/bin/load-modem.sh
+    oneshot
+
+# for USB internet sharing
+# service udhcpd /system/bin/udhcpd
+#     disabled
+#     oneshot
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -aABDKL
+    class late_start
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service dmagent /system/bin/dmagent -N
+    socket dmagent stream 660 root radio
+    user root
+    group radio cache inet misc
+
+#service hciattach /system/bin/brcm_patchram_plus --enable_hci --no2bytes \
+#        --tosleep 50000 --baudrate 3000000 --use_baudrate_for_download \
+#        --patchram /system/vendor/firmware/bcm4330.hcd \
+#        --scopcm=0,0,0,0,0,0,0,3,3,0 /dev/ttyHS0
+#    class main
+#    user bluetooth
+#    group bluetooth net_bt_admin
+#    disabled
+#    oneshot
+
+service hostapd_bin /system/bin/hostapd -d /data/misc/wifi/hostapd.conf
+    socket wpa_wlan0 dgram 660 wifi wifi
+    oneshot
+    disabled
+
+service qcom-post-boot /system/bin/sh /system/etc/init.qcom.post_boot.sh
+    class main
+    user root
+    disabled
+    oneshot
+
+service htcbatt /system/bin/htcbatt
+    class main
+    user root
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+    class late_start
+    disabled
+    oneshot
+
+service kickstart /system/bin/qcks l
+    class main
+    oneshot
+
+service modem /system/xbin/wireless_modem
+    user system
+    group system radio
+    disabled
+
+service mpld /system/bin/mpld
+    class main
+    user system
+    oneshot
+
+service netmgrd /system/bin/netmgrd
+    class main
+
+service netsharing_on /system/bin/netsharing net on
+    class main
+    disabled
+    oneshot
+
+service netsharing_off /system/bin/netsharing net off
+    class main
+    disabled
+    oneshot
+
+service netsharing_pass /system/bin/netsharing net_pass on
+    class main
+    disabled
+    oneshot
+
+service qmuxd /system/bin/qmuxd
+    class main
+    user radio
+    group system radio inet
+
+service qmiproxy /system/bin/qmiproxy
+    class main
+    user radio
+    group radio
+    disabled
+
+service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p25 /dev/block/mmcblk0p26 NULL NULL /dev/block/mmcblk0p27 /dev/block/mmcblk0p28 /dev/block/mmcblkp20
+    class core
+    user root
+
+service ril-daemon /system/bin/rild
+    class main
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio qcom_oncrpc diag system
+
+
+service wpa_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c /data/misc/wifi/wpa_supplicant.conf \
+    -O/data/misc/wifi/sockets \
+    -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
+    user root
+    group wifi inet
+    class main
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+service zchgd_offmode /system/bin/zchgd -pseudooffmode
+    class main
+    user root
+    disabled
+
+service zchgd_onmode /system/bin/zchgd -onmode
+    class main
+    user root
+    oneshot
+
+service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard0 /storage/sdcard0
+    class late_start
+    disabled
+
+service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard1 /storage/sdcard1
+    class late_start
+    disabled
+
+service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/usbdisk /storage/usbdisk
+    class late_start
+    disabled
+
+on property:init.svc.bootanim=stopped
+    start qcom-post-boot
+
+on property:ro.emmc=1
+    start rmt_storage
+
+on property:ro.use_data_netmgrd=false
+    stop netmgrd
+
+on property:service.modem.enable=1
+    start modem
+
+on property:service.modem.enable=0
+    stop modem
+
+on property:service.adb.root=1
+    write /sys/class/android_usb/android0/enable 0
+    restart adbd
+    write /sys/class/android_usb/android0/enable 1
