@@ -29,12 +29,6 @@ persist.rild.ril.ltedrtable=max_retries=infinite,10000
 ro.use_data_netmgrd=true
 persist.data_netmgrd_nint=11
 
-#
-# GooManger
-#
-ro.goo.developerid=Albinoman887
-ro.goo.rom=TeamHydraCM
-
 # Holiday RIL  
 ro.ril.enable.dtm = 0	  	
 ro.ril.gprsclass = 12	  	
@@ -68,7 +62,7 @@ ro.config.lte=true
 ro.config.svdo=true
 telephony.lteOnGsmDevice=1
 
-# audio
+# Audio
 persist.audio.fluence.mode=endfire
 persist.audio.vr.enable=false
 media.a1026.nsForVoiceRec=0
@@ -79,7 +73,7 @@ htc.audio.hac.enable=1
 # lpa.tunnel=true
 # lpa.use-stagefright=true
 
-# wifi
+# Wifi
 wifi.interface=wlan0
 wifi.supplicant_scan_interval=120
 
