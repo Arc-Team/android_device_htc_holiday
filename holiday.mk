@@ -126,6 +126,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
+# Device Default Properties
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.root_access=3 \
+    ro.adb.secure=3
+
 # Device Properties
 PRODUCT_PROPERTY_OVERRIDES += \
     com.qc.hardware=true \
@@ -133,10 +138,17 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.egl.hw=1 \
     ro.ksm.default=1 \
     debug.mdpcomp.maxlayer=0 \
+    wifi.supplicant_scan_interval=255 \
     ro.config.low_ram=true \
     dalvik.vm.jit.codecachesize=0 \
     debug.mdpcomp.logs=0 \
     debug.sf.hw=1 \
+    persist.sys.use_16bpp_alpha=1 \
+    ro.debuggable=1 \
+    ro.vold.umsdirtyratio=40 \
+    persist.service.adb.enable=1 \
+    persist.service.debuggable=1 \
+    persist.sys.purgeable_assets=1 \
     dev.pm.dyn_samplingrate=1 \
     ro.opengles.version=131072 \
     ro.bq.gpu_to_cpu_unsupported=1 \
@@ -272,7 +284,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.setupwizard.enable_bypass=1 \
     ro.com.google.locationfeatures=1 \
     dalvik.vm.lockprof.threshold=500 \
-    dalvik.vm.dexopt-flags=m=y
+    dalvik.vm.dexopt-flags=m=v,o=y
 
 # We have enough space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
