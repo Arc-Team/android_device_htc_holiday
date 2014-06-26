@@ -16,8 +16,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Qualcomm scripts
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/prebuilt/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
-    device/htc/holiday/prebuilt/init.qcom.efs.sync.sh:system/etc/init.qcom.efs.sync.sh
+    device/htc/holiday/prebuilt/etc/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
+    device/htc/holiday/prebuilt/etc/init.qcom.efs.sync.sh:system/etc/init.qcom.efs.sync.sh
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -108,18 +108,18 @@ PRODUCT_PACKAGES += \
 
 # Media configuration
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    device/htc/holiday/configs/media_profiles.xml:system/etc/media_profiles.xml
+    device/htc/holiday/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
+    device/htc/holiday/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml
 
 # audio policy
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/configs/audio_policy.conf:system/etc/audio_policy.conf
+    device/htc/holiday/prebuilt/etc/audio_policy.conf:system/etc/audio_policy.conf
 
 # MSM8660 firmware
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/firmware/leia_pfp_470.fw:system/etc/firmware/leia_pfp_470.fw \
-    device/htc/holiday/firmware/leia_pm4_470.fw:system/etc/firmware/leia_pm4_470.fw \
-    device/htc/holiday/firmware/vidc_1080p.fw:system/etc/firmware/vidc_1080p.fw
+    device/htc/holiday/prebuilt/etc/firmware/leia_pfp_470.fw:system/etc/firmware/leia_pfp_470.fw \
+    device/htc/holiday/prebuilt/etc/firmware/leia_pm4_470.fw:system/etc/firmware/leia_pm4_470.fw \
+    device/htc/holiday/prebuilt/etc/firmware/vidc_1080p.fw:system/etc/firmware/vidc_1080p.fw
 
 
 # Device uses high-density artwork where available
@@ -163,64 +163,64 @@ $(call inherit-product, device/htc/holiday/bcm_hcd.mk)
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
 
 # HTC BT audio config
-PRODUCT_COPY_FILES += device/htc/holiday/dsp/AudioBTID.csv:system/etc/AudioBTID.csv
+PRODUCT_COPY_FILES += device/htc/holiday/prebuilt/etc/AudioBTID.csv:system/etc/AudioBTID.csv
 
 # configs
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/configs/99kernel:system/etc/init.d/99kernel
+    device/htc/holiday/prebuilt/etc/init.d/99kernel:system/etc/init.d/99kernel
 
 # Sound DSP
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/dsp/A1026_CFG.csv:system/etc/A1026_CFG.csv \
-    device/htc/holiday/dsp/AdieHWCodec.csv:system/etc/AdieHWCodec.csv \
-    device/htc/holiday/dsp/AdieHWCodec_BEATS_HW.csv:system/etc/AdieHWCodec_BEATS_HW.csv \
-    device/htc/holiday/dsp/AIC3254_REG.csv:system/etc/AIC3254_REG.csv \
-    device/htc/holiday/dsp/AIC3254_REG_DualMic.csv:system/etc/AIC3254_REG_DualMic.csv \
-    device/htc/holiday/dsp/AIC3254_REG_DualMic.txt:system/etc/AIC3254_REG_DualMic.txt \
-    device/htc/holiday/dsp/AIC3254_REG_DualMic_WA.txt:system/etc/AIC3254_REG_DualMic_WA.txt \
-    device/htc/holiday/dsp/AIC3254_REG_DualMic_XD.csv:system/etc/AIC3254_REG_DualMic_XD.csv \
-    device/htc/holiday/dsp/CodecDSPID.txt:system/etc/CodecDSPID.txt \
-    device/htc/holiday/dsp/CodecDSPID_WA.txt:system/etc/CodecDSPID_WA.txt \
-    device/htc/holiday/dsp/CodecDSPID_WB.txt:system/etc/CodecDSPID_WB.txt \
-    device/htc/holiday/dsp/TPA2051_CFG.csv:system/etc/TPA2051_CFG.csv \
-    device/htc/holiday/dsp/TPA2051_CFG_BEATS_HW.csv:system/etc/TPA2051_CFG_BEATS_HW.csv \
-    device/htc/holiday/dsp/TPA2051_CFG_XC.csv:system/etc/TPA2051_CFG_XC.csv
+    device/htc/holiday/prebuilt/etc/A1026_CFG.csv:system/etc/A1026_CFG.csv \
+    device/htc/holiday/prebuilt/etc/AdieHWCodec.csv:system/etc/AdieHWCodec.csv \
+    device/htc/holiday/prebuilt/etc/AdieHWCodec_BEATS_HW.csv:system/etc/AdieHWCodec_BEATS_HW.csv \
+    device/htc/holiday/prebuilt/etc/AIC3254_REG.csv:system/etc/AIC3254_REG.csv \
+    device/htc/holiday/prebuilt/etc/AIC3254_REG_DualMic.csv:system/etc/AIC3254_REG_DualMic.csv \
+    device/htc/holiday/prebuilt/etc/AIC3254_REG_DualMic.txt:system/etc/AIC3254_REG_DualMic.txt \
+    device/htc/holiday/prebuilt/etc/AIC3254_REG_DualMic_WA.txt:system/etc/AIC3254_REG_DualMic_WA.txt \
+    device/htc/holiday/prebuilt/etc/AIC3254_REG_DualMic_XD.csv:system/etc/AIC3254_REG_DualMic_XD.csv \
+    device/htc/holiday/prebuilt/etc/CodecDSPID.txt:system/etc/CodecDSPID.txt \
+    device/htc/holiday/prebuilt/etc/CodecDSPID_WA.txt:system/etc/CodecDSPID_WA.txt \
+    device/htc/holiday/prebuilt/etc/CodecDSPID_WB.txt:system/etc/CodecDSPID_WB.txt \
+    device/htc/holiday/prebuilt/etc/TPA2051_CFG.csv:system/etc/TPA2051_CFG.csv \
+    device/htc/holiday/prebuilt/etc/TPA2051_CFG_BEATS_HW.csv:system/etc/TPA2051_CFG_BEATS_HW.csv \
+    device/htc/holiday/prebuilt/etc/TPA2051_CFG_XC.csv:system/etc/TPA2051_CFG_XC.csv
 
 # Sound Image DSP
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/dsp/soundimage/Sound_FM_HP.txt:system/etc/soundimage/Sound_FM_HP.txt \
-    device/htc/holiday/dsp/soundimage/Sound_FM_SPK.txt:system/etc/soundimage/Sound_FM_SPK.txt \
-    device/htc/holiday/dsp/soundimage/Sound_MFG.txt:system/etc/soundimage/Sound_MFG.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Original.txt:system/etc/soundimage/Sound_Original.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Original_MFG.txt:system/etc/soundimage/Sound_Original_MFG.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Original_Recording.txt:system/etc/soundimage/Sound_Original_Recording.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Original_SPK.txt:system/etc/soundimage/Sound_Original_SPK.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original.txt:system/etc/soundimage/Sound_Phone_Original.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_HP.txt:system/etc/soundimage/Sound_Phone_Original_HP.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_HP_WA.txt:system/etc/soundimage/Sound_Phone_Original_HP_WA.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_HP_WB.txt:system/etc/soundimage/Sound_Phone_Original_HP_WB.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_MFG.txt:system/etc/soundimage/Sound_Phone_Original_MFG.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_MFG_WA.txt:system/etc/soundimage/Sound_Phone_Original_MFG_WA.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_REC.txt:system/etc/soundimage/Sound_Phone_Original_REC.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_REC_WA.txt:system/etc/soundimage/Sound_Phone_Original_REC_WA.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_REC_WB.txt:system/etc/soundimage/Sound_Phone_Original_REC_WB.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_SPK.txt:system/etc/soundimage/Sound_Phone_Original_SPK.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_SPK_WA.txt:system/etc/soundimage/Sound_Phone_Original_SPK_WA.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_SPK_WB.txt:system/etc/soundimage/Sound_Phone_Original_SPK_WB.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Phone_Original_WA.txt:system/etc/soundimage/Sound_Phone_Original_WA.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Rec_Landscape.txt:system/etc/soundimage/Sound_Rec_Landscape.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Rec_mono.txt:system/etc/soundimage/Sound_Rec_mono.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Rec_Portrait.txt:system/etc/soundimage/Sound_Rec_Portrait.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Rec_Voice_record.txt:system/etc/soundimage/Sound_Rec_Voice_record.txt \
-    device/htc/holiday/dsp/soundimage/Sound_Recording.txt:system/etc/soundimage/Sound_Recording.txt \
-    device/htc/holiday/dsp/soundimage/srs_bypass.cfg:system/etc/soundimage/srs_bypass.cfg \
-    device/htc/holiday/dsp/soundimage/srs_geq10.cfg:system/etc/soundimage/srs_geq10.cfg \
-    device/htc/holiday/dsp/soundimage/srs_global.cfg:system/etc/soundimage/srs_global.cfg \
-    device/htc/holiday/dsp/soundimage/srsfx_trumedia_51.cfg:system/etc/soundimage/srsfx_trumedia_51.cfg \
-    device/htc/holiday/dsp/soundimage/srsfx_trumedia_movie.cfg:system/etc/soundimage/srsfx_trumedia_movie.cfg \
-    device/htc/holiday/dsp/soundimage/srsfx_trumedia_music.cfg:system/etc/soundimage/srsfx_trumedia_music.cfg \
-    device/htc/holiday/dsp/soundimage/srsfx_trumedia_music_wide.cfg:system/etc/soundimage/srsfx_trumedia_music_wide.cfg \
-    device/htc/holiday/dsp/soundimage/srsfx_trumedia_voice.cfg:system/etc/soundimage/srsfx_trumedia_voice.cfg
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_FM_HP.txt:system/etc/soundimage/Sound_FM_HP.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_FM_SPK.txt:system/etc/soundimage/Sound_FM_SPK.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_MFG.txt:system/etc/soundimage/Sound_MFG.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Original.txt:system/etc/soundimage/Sound_Original.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Original_MFG.txt:system/etc/soundimage/Sound_Original_MFG.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Original_Recording.txt:system/etc/soundimage/Sound_Original_Recording.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Original_SPK.txt:system/etc/soundimage/Sound_Original_SPK.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original.txt:system/etc/soundimage/Sound_Phone_Original.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_HP.txt:system/etc/soundimage/Sound_Phone_Original_HP.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_HP_WA.txt:system/etc/soundimage/Sound_Phone_Original_HP_WA.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_HP_WB.txt:system/etc/soundimage/Sound_Phone_Original_HP_WB.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_MFG.txt:system/etc/soundimage/Sound_Phone_Original_MFG.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_MFG_WA.txt:system/etc/soundimage/Sound_Phone_Original_MFG_WA.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_REC.txt:system/etc/soundimage/Sound_Phone_Original_REC.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_REC_WA.txt:system/etc/soundimage/Sound_Phone_Original_REC_WA.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_REC_WB.txt:system/etc/soundimage/Sound_Phone_Original_REC_WB.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_SPK.txt:system/etc/soundimage/Sound_Phone_Original_SPK.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_SPK_WA.txt:system/etc/soundimage/Sound_Phone_Original_SPK_WA.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_SPK_WB.txt:system/etc/soundimage/Sound_Phone_Original_SPK_WB.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Phone_Original_WA.txt:system/etc/soundimage/Sound_Phone_Original_WA.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Rec_Landscape.txt:system/etc/soundimage/Sound_Rec_Landscape.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Rec_mono.txt:system/etc/soundimage/Sound_Rec_mono.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Rec_Portrait.txt:system/etc/soundimage/Sound_Rec_Portrait.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Rec_Voice_record.txt:system/etc/soundimage/Sound_Rec_Voice_record.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/Sound_Recording.txt:system/etc/soundimage/Sound_Recording.txt \
+    device/htc/holiday/prebuilt/etc/soundimage/srs_bypass.cfg:system/etc/soundimage/srs_bypass.cfg \
+    device/htc/holiday/prebuilt/etc/soundimage/srs_geq10.cfg:system/etc/soundimage/srs_geq10.cfg \
+    device/htc/holiday/prebuilt/etc/soundimage/srs_global.cfg:system/etc/soundimage/srs_global.cfg \
+    device/htc/holiday/prebuilt/etc/soundimage/srsfx_trumedia_51.cfg:system/etc/soundimage/srsfx_trumedia_51.cfg \
+    device/htc/holiday/prebuilt/etc/soundimage/srsfx_trumedia_movie.cfg:system/etc/soundimage/srsfx_trumedia_movie.cfg \
+    device/htc/holiday/prebuilt/etc/soundimage/srsfx_trumedia_music.cfg:system/etc/soundimage/srsfx_trumedia_music.cfg \
+    device/htc/holiday/prebuilt/etc/soundimage/srsfx_trumedia_music_wide.cfg:system/etc/soundimage/srsfx_trumedia_music_wide.cfg \
+    device/htc/holiday/prebuilt/etc/soundimage/srsfx_trumedia_voice.cfg:system/etc/soundimage/srsfx_trumedia_voice.cfg
 
 # Recovery
 PRODUCT_COPY_FILES += \
@@ -233,16 +233,16 @@ PRODUCT_COPY_FILES += \
 
 # Keylayouts and Keychars
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/keychars/holiday-keypad.kcm:system/usr/keychars/holiday-keypad.kcm \
-    device/htc/holiday/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
-    device/htc/holiday/keylayout/cy8c-touchscreen.kl:system/usr/keylayout/cy8c-touchscreen.kl \
-    device/htc/holiday/keylayout/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
-    device/htc/holiday/keylayout/holiday-keypad.kl:system/usr/keylayout/holiday-keypad.kl
+    device/htc/holiday/prebuilt/usr/keychars/holiday-keypad.kcm:system/usr/keychars/holiday-keypad.kcm \
+    device/htc/holiday/prebuilt/usr/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl \
+    device/htc/holiday/prebuilt/usr/keylayout/cy8c-touchscreen.kl:system/usr/keylayout/cy8c-touchscreen.kl \
+    device/htc/holiday/prebuilt/usr/keylayout/h2w_headset.kl:system/usr/keylayout/h2w_headset.kl \
+    device/htc/holiday/prebuilt/usr/keylayout/holiday-keypad.kl:system/usr/keylayout/holiday-keypad.kl
 
 # Input device config
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/idc/cy8c-touchscreen.idc:system/usr/idc/cy8c-touchscreen.idc \
-    device/htc/holiday/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
+    device/htc/holiday/prebuilt/usr/idc/cy8c-touchscreen.idc:system/usr/idc/cy8c-touchscreen.idc \
+    device/htc/holiday/prebuilt/usr/idc/synaptics-rmi-touchscreen.idc:system/usr/idc/synaptics-rmi-touchscreen.idc
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -250,21 +250,21 @@ PRODUCT_COPY_FILES += \
 
 # Adreno Drivers
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/firmware/a225_pfp.fw:system/etc/firmware/a225_pfp.fw \
-    device/htc/holiday/firmware/a225_pm4.fw:system/etc/firmware/a225_pm4.fw \
-    device/htc/holiday/firmware/a225p5_pm4.fw:system/etc/firmware/a225p5_pm4.fw \
-    device/htc/holiday/firmware/yamato_pfp.fw:system/etc/firmware/yamato_pfp.fw \
-    device/htc/holiday/firmware/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw
+    device/htc/holiday/prebuilt/etc/firmware/a225_pfp.fw:system/etc/firmware/a225_pfp.fw \
+    device/htc/holiday/prebuilt/etc/firmware/a225_pm4.fw:system/etc/firmware/a225_pm4.fw \
+    device/htc/holiday/prebuilt/etc/firmware/a225p5_pm4.fw:system/etc/firmware/a225p5_pm4.fw \
+    device/htc/holiday/prebuilt/etc/firmware/yamato_pfp.fw:system/etc/firmware/yamato_pfp.fw \
+    device/htc/holiday/prebuilt/etc/firmware/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw
 
 # Wifi Firmware
 PRODUCT_COPY_FILES += \
-    device/htc/holiday/firmware/BCM4330B1.hcd:system/etc/firmware/BCM4330B1.hcd \
-    device/htc/holiday/firmware/fw_bcm4330_apsta_b1.bin:system/etc/firmware/fw_bcm4330_apsta_b1.bin \
-    device/htc/holiday/firmware/fw_bcm4330_apsta_b2.bin:system/etc/firmware/fw_bcm4330_apsta_b2.bin \
-    device/htc/holiday/firmware/fw_bcm4330_b1.bin:system/etc/firmware/fw_bcm4330_b1.bin \
-    device/htc/holiday/firmware/fw_bcm4330_b2.bin:system/etc/firmware/fw_bcm4330_b2.bin \
-    device/htc/holiday/firmware/fw_bcm4330_p2p_b1.bin:system/etc/firmware/fw_bcm4330_p2p_b1.bin \
-    device/htc/holiday/firmware/fw_bcm4330_p2p_b2.bin:system/etc/firmware/fw_bcm4330_p2p_b2.bin
+    device/htc/holiday/prebuilt/etc/firmware/BCM4330B1.hcd:system/etc/firmware/BCM4330B1.hcd \
+    device/htc/holiday/prebuilt/etc/firmware/fw_bcm4330_apsta_b1.bin:system/etc/firmware/fw_bcm4330_apsta_b1.bin \
+    device/htc/holiday/prebuilt/etc/firmware/fw_bcm4330_apsta_b2.bin:system/etc/firmware/fw_bcm4330_apsta_b2.bin \
+    device/htc/holiday/prebuilt/etc/firmware/fw_bcm4330_b1.bin:system/etc/firmware/fw_bcm4330_b1.bin \
+    device/htc/holiday/prebuilt/etc/firmware/fw_bcm4330_b2.bin:system/etc/firmware/fw_bcm4330_b2.bin \
+    device/htc/holiday/prebuilt/etc/firmware/fw_bcm4330_p2p_b1.bin:system/etc/firmware/fw_bcm4330_p2p_b1.bin \
+    device/htc/holiday/prebuilt/etc/firmware/fw_bcm4330_p2p_b2.bin:system/etc/firmware/fw_bcm4330_p2p_b2.bin
 
 # Extra properties
 PRODUCT_PROPERTY_OVERRIDES += \
