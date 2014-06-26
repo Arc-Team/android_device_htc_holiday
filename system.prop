@@ -1,12 +1,5 @@
-#
-# system.prop for holiday
-#
 
-persist.fuse_sdcard=true
-
-ro.sf.lcd_density=240
-
-# RIL properties
+# RIL
 mobiledata.interfaces=rmnet0,rmnet1,gprs,ppp0
 rild.libpath=/system/lib/libril-qc-qmi-1.so
 rild.libargs=-d /dev/smd0
@@ -24,22 +17,17 @@ persist.rild.nitz_short_ons_3=""
 persist.rild.ril.ltedr=0
 persist.rild.ril.ltedrtable=max_retries=infinite,10000
 
-# system props for the data modules
-#
-ro.use_data_netmgrd=true
-persist.data_netmgrd_nint=11
-
-# Holiday RIL  
-ro.ril.enable.dtm = 0	  	
-ro.ril.gprsclass = 12	  	
-ro.ril.hsdpa.category = 14	  	
-ro.ril.hsupa.category = 6	  	
-ro.ril.hsxpa = 4	  	
-ro.ril.enable.amr.wideband=1	  	
-ro.ril.enable.r8fd=1	  	
-ro.ril.radio.svn=5  	
-ro.ril.fast.dormancy.rule=1  	
-ro.ril.disable.mcc.filter=1  	
+# Holiday RIL
+ro.ril.enable.dtm=0
+ro.ril.gprsclass=12
+ro.ril.hsdpa.category=14
+ro.ril.hsupa.category=6
+ro.ril.hsxpa=4
+ro.ril.enable.amr.wideband=1
+ro.ril.enable.r8fd=1
+ro.ril.radio.svn=5
+ro.ril.fast.dormancy.rule=1
+ro.ril.disable.mcc.filter=1
 ro.ril.disable.fd.plmn.prefix=23402,23410,23411,23420
 ro.telephony.default_network=9
 ro.ril.ciq=1
@@ -52,57 +40,21 @@ ro.ril.set.mtusize=1410
 ro.ril.multirab.throttling=1
 htc.audio.global.state=0
 htc.audio.q6.topology=0
-ro.ril.enable.prl.recognition = 1
-ro.ril.att.feature = 1
+ro.ril.enable.prl.recognition=1
+ro.ril.att.feature=1
 ro.ril.enable.amr.wideband=0
-
-# system props for telephony modules
 ro.config.lte=true
-# device supports simultaneous 1x voice + LTE
 ro.config.svdo=true
 telephony.lteOnGsmDevice=1
 
-# Audio
-persist.audio.fluence.mode=endfire
-persist.audio.vr.enable=false
-media.a1026.nsForVoiceRec=0
-media.a1026.enableA1026=0
-htc.audio.alt.enable=0
-htc.audio.hac.enable=1
-# lpa.decode=true
-# lpa.tunnel=true
-# lpa.use-stagefright=true
-
-# Wifi
-wifi.interface=wlan0
-wifi.supplicant_scan_interval=120
-
-#Modify MTU from 1500 to 1472 on 3G network
-ro.ril.set.mtu1472 = 1
-
-# For the default value of agps
-ro.ril.def.agps.mode = 2
-
-# System prop for switching gps driver to qmi
+# Team-Hydra
+ro.ril.set.mtu1472=1
+ro.ril.def.agps.mode=2
 persist.gps.qmienabled=true
-
-# System property for cabl
 ro.qualcomm.cabl=0
-
-# support sdcard2
-ro.sdcard2 = 1
-# For internal fat file system
-ro.phone_fat = 1
-
-# UMS
-persist.sys.usb.config=mtp
-ro.vold.umsdirtyratio=40
-
-# Scrolling-Tweaks
-windowsmgr.max_events_per_sec=150
+ro.sdcard2=1
+ro.phone_fat=1
+ro.emmc=1
 ro.max.fling_velocity=12000
 ro.min.fling_velocity=8000
 view.scroll_friction=0
-
-# Make rmt_storage start at init
-ro.emmc = 1
