@@ -47,6 +47,22 @@ PRODUCT_PACKAGES += \
     power.msm8660 \
     gps.holiday
 
+# Ramdisk
+PRODUCT_COPY_FILES += \
+    init.holiday.rc \
+    init.holiday.usb.rc \
+    ueventd.holiday.rc \
+    fstab.holiday
+
+# Recovery
+PRODUCT_COPY_FILES += \
+    init.rc \
+    choice_fn \
+    detect_key \
+    offmode_charging \
+    htcbatt \
+    power_test
+
 # Filesystem
 PRODUCT_PACKAGES += \
     make_ext4fs \
@@ -59,22 +75,6 @@ PRODUCT_PACKAGES += \
     libnetcmdiface \
     libsurfaceflinger_client \
     com.android.future.usb.accessory
-
-# Ramdisk
-PRODUCT_COPY_FILES += \
-    device/htc/holiday/ramdisk/init.holiday.rc:root/init.holiday.rc \
-    device/htc/holiday/ramdisk/init.holiday.usb.rc:root/init.holiday.usb.rc \
-    device/htc/holiday/ramdisk/ueventd.holiday.rc:root/ueventd.holiday.rc \
-    device/htc/holiday/ramdisk/fstab.holiday:root/fstab.holiday
-
-# Recovery
-PRODUCT_COPY_FILES += \
-    device/htc/holiday/recovery/init-cwm.rc:recovery/init.rc \
-    device/htc/holiday/recovery/sbin/choice_fn:recovery/root/sbin/choice_fn \
-    device/htc/holiday/recovery/sbin/detect_key:recovery/root/sbin/detect_key \
-    device/htc/holiday/recovery/sbin/offmode_charging:recovery/root/sbin/offmode_charging \
-    device/htc/holiday/recovery/sbin/htcbatt:recovery/root/sbin/htcbatt \
-    device/htc/holiday/recovery/sbin/power_test:recovery/root/sbin/power_test
 
 # Permissions
 PRODUCT_COPY_FILES += \
