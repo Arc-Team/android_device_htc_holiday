@@ -139,8 +139,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.bq.gpu_to_cpu_unsupported=1 \
     debug.egl.recordable.rgba8888=1
 
-DEVICE_PACKAGE_OVERLAYS += device/htc/holiday/overlay
-
 # Boot ramdisk setup
 PRODUCT_COPY_FILES += \
     device/htc/holiday/ramdisk/init.holiday.rc:root/init.holiday.rc \
