@@ -111,7 +111,7 @@ BOARD_VOLD_MAX_PARTITIONS := 36
 # Recovery
 USE_SET_METADATA := false
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
-TARGET_RECOVERY_FSTAB = device/htc/holiday/ramdisk/fstab.holiday
+TARGET_RECOVERY_FSTAB = device/htc/holiday/rootdir/fstab.holiday
 
 # CWM
 BOARD_HAS_NO_SELECT_BUTTON := true
