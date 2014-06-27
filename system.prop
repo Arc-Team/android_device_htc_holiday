@@ -55,6 +55,11 @@ ro.qualcomm.cabl=0
 ro.sdcard2=1
 ro.phone_fat=1
 ro.emmc=1
-ro.max.fling_velocity=12000
+windowsmgr.max_events_per_sec=180
+ro.max.fling_velocity=14000
 ro.min.fling_velocity=8000
 view.scroll_friction=0
+
+# Disable error checking
+ro.kernel.android.checkjni=0
+ro.kernel.checkjni=0
