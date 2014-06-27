@@ -14,7 +14,7 @@ TARGET_BOOTANIMATION_NAME := 540
 PRODUCT_DEVICE := holiday
 PRODUCT_NAME := cm_holiday
 PRODUCT_BRAND := htc
-PRODUCT_MODEL := Vivid 4G
+PRODUCT_MODEL := HTC Vivid 4G
 PRODUCT_MANUFACTURER := HTC
 
 # Set Build Bingerprint / ID / Product Name
