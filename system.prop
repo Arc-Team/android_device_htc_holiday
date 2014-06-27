@@ -1,3 +1,4 @@
+
 # RIL
 mobiledata.interfaces=rmnet0,rmnet1,gprs,ppp0
 rild.libpath=/system/lib/libril-qc-qmi-1.so
