@@ -48,14 +48,14 @@ PRODUCT_PACKAGES += \
     gps.holiday
 
 # Ramdisk
-PRODUCT_COPY_FILES += \
+PRODUCT_PACKAGES += \
     init.holiday.rc \
     init.holiday.usb.rc \
     ueventd.holiday.rc \
     fstab.holiday
 
 # Recovery
-PRODUCT_COPY_FILES += \
+PRODUCT_PACKAGES += \
     init.rc \
     choice_fn \
     detect_key \
