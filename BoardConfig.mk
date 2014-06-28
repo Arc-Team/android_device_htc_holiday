@@ -124,6 +124,9 @@ BOARD_SDCARD_DEVICE_SECONDARY := /dev/block/mmcblk1
 BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p2
 TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/class/leds/lcd-backlight/brightness\"
 
+# Misc
+COMMON_GLOBAL_CFLAGS += -DHTCLOG
+
 # TWRP
 DEVICE_RESOLUTION := 540x960
 TW_INCLUDE_DUMLOCK := true
