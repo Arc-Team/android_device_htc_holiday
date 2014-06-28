@@ -32,4 +32,8 @@ exists. Use this option to change that behavior -->
 
     <!-- Disable touch snapshot in video recording -->
     <bool name="disableTouchSnapshot">true</bool>
+
+    <!-- Use ZSL mode for Qualcomm cameras -->
+    <bool name="enableZSL">true</bool>
+
 </resources>
