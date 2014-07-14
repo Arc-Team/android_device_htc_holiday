@@ -56,7 +56,7 @@ PRODUCT_PACKAGES += \
 
 # Recovery
 PRODUCT_PACKAGES += \
-    init.rc \
+    init.recovery.holiday.rc \
     choice_fn \
     detect_key \
     offmode_charging \
