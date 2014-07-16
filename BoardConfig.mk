@@ -27,8 +27,6 @@ TARGET_KERNEL_CONFIG := holiday_defconfig
 
 # Team-Hydra
 BUILD_KERNEL := true
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-arm-cortex-a8
-TARGET_KERNEL_CUSTOM_TOOLCHAIN_SUFFIX := arm-cortex_a8-linux-gnueabi
 
 # QCOM
 BOARD_USES_QCOM_HARDWARE := true
