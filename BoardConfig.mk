@@ -24,12 +24,7 @@ BOARD_PAGE_SIZE := 2048
 BOARD_KERNEL_CMDLINE := console=ttyHSL0 androidboot.hardware=holiday no_console_suspend=1
 TARGET_KERNEL_SOURCE := kernel/htc/holiday
 TARGET_KERNEL_CONFIG := holiday_defconfig
-
-# Team-Hydra
-BUILD_KERNEL := true
-# TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-arm-cortex-a8
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9-cortex-a8
-TARGET_KERNEL_CUSTOM_TOOLCHAIN_SUFFIX := arm-cortex_a8-linux-gnueabi
 
 # QCOM
 BOARD_USES_QCOM_HARDWARE := true
