@@ -78,3 +78,6 @@ ro.kernel.checkjni=0
 ro.lge.proximity.delay=25
 ro.ril.disable.power.collapse=1
 pm.sleep_mode=1
+
+# Camera
+ro.media.enc.jpeg.quality=100
