@@ -434,3 +434,57 @@ on property:service.adb.root=1
     write /sys/class/android_usb/android0/enable 0
     restart adbd
     write /sys/class/android_usb/android0/enable 1
+
+    # Set performance profile
+    setprop sys.perf.profile 1
+
+# CM Performance Profiles
+
+# Powersave
+on property:sys.perf.profile=0
+    write /sys/devices/system/cpu/cpu1/online 0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor conservative
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor conservative
+    write /sys/devices/system/cpu/cpufreq/conservative/up_threshold 95
+    write /sys/devices/system/cpu/cpufreq/conservative/sampling_rate 120000
+    write /sys/devices/system/cpu/cpufreq/conservative/sampling_down_factor 1
+    write /sys/devices/system/cpu/cpufreq/conservative/down_threshold 40
+    white /sys/devices/system/cpu/cpufreq/conservative/freq_step 10
+    write /sys/devices/platform/kgsl-2d0.0/kgsl/kgsl-2d0/gpuclk 145455000
+    write /sys/devices/platform/kgsl-2d0.0/kgsl/kgsl-2d0/max_gpuclk 145455000
+    write /sys/devices/platform/kgsl-2d1.1/kgsl/kgsl-2d1/gpuclk 145455000
+    write /sys/devices/platform/kgsl-2d1.1/kgsl/kgsl-2d1/max_gpuclk 145455000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk 228571000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk 228571000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/trustzone/governor ondemand
+
+# Balanced
+on property:sys.perf.profile=1
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ondemand
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor ondemand
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 90
+    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 85000
+    write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor 1
+    write /sys/devices/system/cpu/cpufreq/ondemand/down_differential 10
+    write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
+    write /sys/devices/platform/kgsl-2d0.0/kgsl/kgsl-2d0/gpuclk 200000000
+    write /sys/devices/platform/kgsl-2d0.0/kgsl/kgsl-2d0/max_gpuclk 200000000
+    write /sys/devices/platform/kgsl-2d1.1/kgsl/kgsl-2d1/gpuclk 200000000
+    write /sys/devices/platform/kgsl-2d1.1/kgsl/kgsl-2d1/max_gpuclk 200000000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk 300000000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk 300000000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/trustzone/governor ondemand
+
+# High performance
+on property:sys.perf.profile=2
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor performance
+    write /sys/devices/platform/kgsl-2d0.0/kgsl/kgsl-2d0/gpuclk 266667000
+    write /sys/devices/platform/kgsl-2d0.0/kgsl/kgsl-2d0/max_gpuclk 266667000
+    write /sys/devices/platform/kgsl-2d1.1/kgsl/kgsl-2d1/gpuclk 266667000
+    write /sys/devices/platform/kgsl-2d1.1/kgsl/kgsl-2d1/max_gpuclk 266667000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk 320000000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk 320000000
+    write /sys/devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/trustzone/governor performance
