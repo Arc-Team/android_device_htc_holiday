@@ -105,7 +105,7 @@ BOARD_WANTS_EMMC_BOOT := true
 BOARD_VOLD_MAX_PARTITIONS := 36
 
 # Recovery
-USE_SET_METADATA := false
+USE_SET_METADATA := true
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 TARGET_RECOVERY_FSTAB = device/htc/holiday/rootdir/fstab.holiday
 
