@@ -1,8 +1,20 @@
-/boot           emmc    /dev/block/mmcblk0p22
-/recovery       emmc    /dev/block/mmcblk0p23
-/misc           emmc    /dev/block/mmcblk0p24
-/system         ext4    /dev/block/mmcblk0p29
-/data           ext4    /dev/block/mmcblk0p34
-/cache          ext4    /dev/block/mmcblk0p35
-/sdcard         vfat    /dev/block/mmcblk0p36
-/external_sd    vfat    /dev/block/mmcblk1p1    /dev/block/mmcblk1
+# System
+#vendor/firmware/misc        vfat    /dev/block/mmcblk0p17
+#vendor/firmware/misc_mdm    vfat    /dev/block/mmcblk0p18
+#vendor/firmware/adsp        vfat    /dev/block/mmcblk0p21
+/boot                        emmc    /dev/block/mmcblk0p22
+/recovery                    emmc    /dev/block/mmcblk0p23
+/misc                        emmc    /dev/block/mmcblk0p24
+/system                      ext4    /dev/block/mmcblk0p29
+/devlog                      ext4    /dev/block/mmcblk0p30
+/data                        ext4    /dev/block/mmcblk0p34
+/cache                       ext4    /dev/block/mmcblk0p35
+
+# Internal
+/sdcard                      vfat    /dev/block/mmcblk0p36                         flags=display="Internal";settingsstorage
+
+# SDCard
+/external_sd                 vfat    /dev/block/mmcblk1p1    /dev/block/mmcblk1    flags=display="SDCard";storage;wipeingui;removable
+
+# USB
+/usb-otg                     vfat    /dev/block/sda1         /dev/block/sda        flags=display="USB";storage;wipeingui;removable
