@@ -1,4 +1,4 @@
-/* copyright (c) 2012, The Linux Foundation. all rights reserved.
+/* copyright (c) 2012, code aurora forum. all rights reserved.
  *
  * redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -9,7 +9,7 @@
  *       copyright notice, this list of conditions and the following
  *       disclaimer in the documentation and/or other materials provided
  *       with the distribution.
- *     * neither the name of The Linux Foundation nor the names of its
+ *     * neither the name of code aurora forum, inc. nor the names of its
  *       contributors may be used to endorse or promote products derived
  *       from this software without specific prior written permission.
  *
@@ -27,7 +27,7 @@
  *
  */
 /*--------------------------------------------------------------------------
-Copyright (c) 2012 The Linux Foundation. All rights reserved.
+Copyright (c) 2012 Code Aurora Forum. All rights reserved.
 --------------------------------------------------------------------------*/
 
 #include <C2DColorConverter.h>
@@ -485,11 +485,13 @@ size_t C2DColorConverter::calcSize(ColorConvertFormat format, size_t width, size
 void * C2DColorConverter::getMappedGPUAddr(int bufFD, void *bufPtr, size_t bufLen)
 {
     struct kgsl_map_user_mem param;
-    memset(&param, 0, sizeof(param));
     param.fd = bufFD;
+    param.offset = 0;
     param.len = bufLen;
     param.hostptr = (unsigned int)bufPtr;
     param.memtype = KGSL_USER_MEM_TYPE_ION;
+    param.reserved = 0;
+    param.gpuaddr = 0;
 
     if (!ioctl(mKgslFd, IOCTL_KGSL_MAP_USER_MEM, &param, sizeof(param))) {
         ALOGV("mapping successful for buffer %p size %d\n",

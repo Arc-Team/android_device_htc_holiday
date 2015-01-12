@@ -399,8 +399,6 @@ static int stretch_copybit(
                 // we don't support plane alpha with RGBA formats
                 case HAL_PIXEL_FORMAT_RGBA_8888:
                 case HAL_PIXEL_FORMAT_BGRA_8888:
-                case HAL_PIXEL_FORMAT_RGBA_5551:
-                case HAL_PIXEL_FORMAT_RGBA_4444:
                     ALOGE ("%s : Unsupported Pixel format %d", __FUNCTION__,
                            src->format);
                     return -EINVAL;
@@ -427,8 +425,12 @@ static int stretch_copybit(
         }
 
         if(src->format ==  HAL_PIXEL_FORMAT_YV12) {
+#ifdef USE_ION
+            int usage = GRALLOC_USAGE_PRIVATE_UI_CONTIG_HEAP;
+#else
             int usage = GRALLOC_USAGE_PRIVATE_ADSP_HEAP |
-                GRALLOC_USAGE_PRIVATE_MM_HEAP;
+                            GRALLOC_USAGE_PRIVATE_MM_HEAP;
+#endif
             if (0 == alloc_buffer(&yv12_handle,src->w,src->h,
                                   src->format, usage)){
                 if(0 == convertYV12toYCrCb420SP(src,yv12_handle)){

@@ -90,7 +90,6 @@ extern "C" {
 #define DELAY 66
 #define false 0
 #define true 1
-#define H264_START_CODE 0x00000001
 #define VOP_START_CODE 0x000001B6
 #define SHORT_HEADER_START_CODE 0x00008000
 #define MPEG2_FRAME_START_CODE 0x00000100
@@ -227,7 +226,6 @@ typedef enum {
 
   FILE_TYPE_START_OF_H264_SPECIFIC = 10,
   FILE_TYPE_264_NAL_SIZE_LENGTH = FILE_TYPE_START_OF_H264_SPECIFIC,
-  FILE_TYPE_264_START_CODE_BASED,
 
   FILE_TYPE_START_OF_MP4_SPECIFIC = 20,
   FILE_TYPE_PICTURE_START_CODE = FILE_TYPE_START_OF_MP4_SPECIFIC,
@@ -379,8 +377,6 @@ OMX_COMPONENTTYPE* dec_handle = 0;
 
 OMX_BUFFERHEADERTYPE  **pInputBufHdrs = NULL;
 OMX_BUFFERHEADERTYPE  **pOutYUVBufHdrs= NULL;
-OMX_BUFFERHEADERTYPE  *pLastBuff = NULL;
-
 
 static OMX_BOOL use_external_pmem_buf = OMX_FALSE;
 
@@ -412,7 +408,6 @@ int run_tests();
 static int video_playback_count = 1;
 static int open_video_file ();
 static int Read_Buffer_From_DAT_File(OMX_BUFFERHEADERTYPE  *pBufHdr );
-static int Read_Buffer_From_H264_Start_Code_File(OMX_BUFFERHEADERTYPE  *pBufHdr);
 static int Read_Buffer_ArbitraryBytes(OMX_BUFFERHEADERTYPE  *pBufHdr);
 static int Read_Buffer_From_Vop_Start_Code_File(OMX_BUFFERHEADERTYPE  *pBufHdr);
 static int Read_Buffer_From_Mpeg2_Start_Code(OMX_BUFFERHEADERTYPE  *pBufHdr);
@@ -1019,7 +1014,6 @@ void* fbd_thread(void* pArg)
           pthread_mutex_unlock(&eos_lock);
           pthread_mutex_unlock(&fbd_lock);
         }
-        pLastBuff = pBuffer;
     }
     pthread_mutex_unlock(&enable_lock);
     if(cmd_data <= fbd_cnt)
@@ -1321,7 +1315,6 @@ int main(int argc, char **argv)
       if (codec_format_option == CODEC_FORMAT_H264)
       {
         printf(" 3--> NAL LENGTH SIZE CLIP (.264c)\n");
-        printf(" 4--> START CODE BASED CLIP (.264/.h264)\n");
       }
       else if ( (codec_format_option == CODEC_FORMAT_MP4) || (codec_format_option == CODEC_FORMAT_H263) )
       {
@@ -1648,14 +1641,7 @@ int run_tests()
     Read_Buffer = Read_Buffer_ArbitraryBytes;
   }
   else if(codec_format_option == CODEC_FORMAT_H264) {
-    if (file_type_option == FILE_TYPE_264_NAL_SIZE_LENGTH) {
-       Read_Buffer = Read_Buffer_From_Size_Nal;
-    } else if (file_type_option == FILE_TYPE_264_START_CODE_BASED) {
-       Read_Buffer = Read_Buffer_From_H264_Start_Code_File;
-    } else {
-       DEBUG_PRINT_ERROR("Invalid file_type_option(%d) for H264", file_type_option);
-       return -1;
-    }
+    Read_Buffer = Read_Buffer_From_Size_Nal;
   }
   else if((codec_format_option == CODEC_FORMAT_H263) ||
           (codec_format_option == CODEC_FORMAT_MP4)) {
@@ -1690,7 +1676,6 @@ int run_tests()
   {
     case FILE_TYPE_DAT_PER_AU:
     case FILE_TYPE_ARBITRARY_BYTES:
-    case FILE_TYPE_264_START_CODE_BASED:
     case FILE_TYPE_264_NAL_SIZE_LENGTH:
     case FILE_TYPE_PICTURE_START_CODE:
     case FILE_TYPE_MPEG2_START_CODE:
@@ -1966,7 +1951,6 @@ int Play_Decoder()
       case FILE_TYPE_DAT_PER_AU:
       case FILE_TYPE_PICTURE_START_CODE:
       case FILE_TYPE_MPEG2_START_CODE:
-      case FILE_TYPE_264_START_CODE_BASED:
       case FILE_TYPE_RCV:
       case FILE_TYPE_VC1:
 #ifdef MAX_RES_1080P
@@ -2817,92 +2801,6 @@ static int Read_Buffer_From_DAT_File(OMX_BUFFERHEADERTYPE  *pBufHdr)
     pBufHdr->nTimeStamp = timeStampLfile;
     timeStampLfile += timestampInterval;
     return bytes_read;
-}
-
-static int Read_Buffer_From_H264_Start_Code_File(OMX_BUFFERHEADERTYPE  *pBufHdr)
-{
-    int bytes_read = 0;
-    int cnt = 0;
-    unsigned int code = 0;
-    int naluType = 0;
-    int newFrame = 0;
-    char *dataptr = (char *)pBufHdr->pBuffer;
-    DEBUG_PRINT("Inside %s", __FUNCTION__);
-    do
-    {
-        newFrame = 0;
-        bytes_read = read(inputBufferFileFd, &dataptr[cnt], 1);
-        if (!bytes_read)
-        {
-            DEBUG_PRINT("\n%s: Bytes read Zero", __FUNCTION__);
-            break;
-        }
-        code <<= 8;
-        code |= (0x000000FF & dataptr[cnt]);
-        cnt++;
-        if ((cnt == 4) && (code != H264_START_CODE))
-        {
-            DEBUG_PRINT_ERROR("\n%s: ERROR: Invalid start code found 0x%x", __FUNCTION__, code);
-            cnt = 0;
-            break;
-        }
-        if ((cnt > 4) && (code == H264_START_CODE))
-        {
-            DEBUG_PRINT("%s: Found H264_START_CODE", __FUNCTION__);
-            bytes_read = read(inputBufferFileFd, &dataptr[cnt], 1);
-            if (!bytes_read)
-            {
-                DEBUG_PRINT("\n%s: Bytes read Zero", __FUNCTION__);
-                break;
-            }
-            DEBUG_PRINT("%s: READ Byte[%d] = 0x%x", __FUNCTION__, cnt, dataptr[cnt]);
-            naluType = dataptr[cnt] & 0x1F;
-            cnt++;
-            if ((naluType == 1) || (naluType == 5))
-            {
-                DEBUG_PRINT("%s: Found AU", __FUNCTION__);
-                bytes_read = read(inputBufferFileFd, &dataptr[cnt], 1);
-                if (!bytes_read)
-                {
-                    DEBUG_PRINT("\n%s: Bytes read Zero", __FUNCTION__);
-                    break;
-                }
-                DEBUG_PRINT("%s: READ Byte[%d] = 0x%x", __FUNCTION__, cnt, dataptr[cnt]);
-                newFrame = (dataptr[cnt] & 0x80);
-                cnt++;
-                if (newFrame)
-                {
-                    lseek64(inputBufferFileFd, -6, SEEK_CUR);
-                    cnt -= 6;
-                    DEBUG_PRINT("%s: Found a NAL unit (type 0x%x) of size = %d", __FUNCTION__, (dataptr[4] & 0x1F), cnt);
-                    break;
-                }
-                else
-                {
-                    DEBUG_PRINT("%s: Not a New Frame", __FUNCTION__);
-                }
-            }
-            else
-            {
-                lseek64(inputBufferFileFd, -5, SEEK_CUR);
-                cnt -= 5;
-                DEBUG_PRINT("%s: Found NAL unit (type 0x%x) of size = %d", __FUNCTION__, (dataptr[4] & 0x1F), cnt);
-                break;
-            }
-        }
-    } while (1);
-
-#ifdef TEST_TS_FROM_SEI
-    if (timeStampLfile == 0)
-      pBufHdr->nTimeStamp = 0;
-    else
-      pBufHdr->nTimeStamp = LLONG_MAX;
-#else
-    pBufHdr->nTimeStamp = timeStampLfile;
-#endif
-    timeStampLfile += timestampInterval;
-
-    return cnt;
 }
 
 static int Read_Buffer_ArbitraryBytes(OMX_BUFFERHEADERTYPE  *pBufHdr)
@@ -3965,12 +3863,6 @@ void render_fb(struct OMX_BUFFERHEADERTYPE *pBufHdr)
 int disable_output_port()
 {
     DEBUG_PRINT("DISABLING OP PORT\n");
-    pthread_mutex_lock(&fbd_lock);
-    if ( pLastBuff != NULL ) {
-        push(fbd_queue, (void *)pLastBuff);
-        pLastBuff = NULL;
-    }
-    pthread_mutex_unlock(&fbd_lock);
     pthread_mutex_lock(&enable_lock);
     sent_disabled = 1;
     // Send DISABLE command

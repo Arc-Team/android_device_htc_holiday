@@ -29,55 +29,88 @@
 #ifndef GRALLOC_ALLOCCONTROLLER_H
 #define GRALLOC_ALLOCCONTROLLER_H
 
-#include <utils/RefBase.h>
-
 namespace gralloc {
 
 struct alloc_data;
 class IMemAlloc;
 class IonAlloc;
-#ifdef USE_PMEM_CAMERA
+#ifdef USE_PMEM_ADSP
 class PmemAdspAlloc;
-class PmemSmiAlloc;
 #endif
 
-class IAllocController : public android::RefBase {
+class IAllocController {
 
     public:
     /* Allocate using a suitable method
      * Returns the type of buffer allocated
      */
-    virtual int allocate(alloc_data& data, int usage,
-                         int compositionType) = 0;
+    virtual int allocate(alloc_data& data, int usage) = 0;
 
-    virtual android::sp<IMemAlloc> getAllocator(int flags) = 0;
+    virtual IMemAlloc* getAllocator(int flags) = 0;
 
     virtual ~IAllocController() {};
 
-    static android::sp<IAllocController> getInstance(bool useMasterHeap);
+    static IAllocController* getInstance(bool useMasterHeap);
 
     private:
-    static android::sp<IAllocController> sController;
+    static IAllocController* sController;
 
 };
 
+#ifdef USE_ION
 class IonController : public IAllocController {
 
     public:
-    virtual int allocate(alloc_data& data, int usage,
-                         int compositionType);
+    virtual int allocate(alloc_data& data, int usage);
 
-    virtual android::sp<IMemAlloc> getAllocator(int flags);
+    virtual IMemAlloc* getAllocator(int flags);
 
     IonController();
 
     private:
-    android::sp<IonAlloc> mIonAlloc;
-#ifdef USE_PMEM_CAMERA
-    android::sp<PmemAdspAlloc> mPmemAlloc;
-    android::sp<PmemSmiAlloc> mPmemSmipoolAlloc;
+    IonAlloc* mIonAlloc;
+#ifdef USE_PMEM_ADSP
+    PmemAdspAlloc* mPmemAlloc;
 #endif
+
 };
+#else
+class PmemKernelController : public IAllocController {
+
+    public:
+    virtual int allocate(alloc_data& data, int usage);
+
+    virtual IMemAlloc* getAllocator(int flags);
+
+    PmemKernelController ();
+
+    ~PmemKernelController ();
+
+    private:
+    IMemAlloc* mPmemAdspAlloc;
+
+};
+
+// Main pmem controller - this should only
+// be used within gralloc
+class PmemAshmemController : public IAllocController {
+
+    public:
+    virtual int allocate(alloc_data& data, int usage);
+
+    virtual IMemAlloc* getAllocator(int flags);
+
+    PmemAshmemController();
+
+    ~PmemAshmemController();
+
+    private:
+    IMemAlloc* mPmemUserspaceAlloc;
+    IMemAlloc* mAshmemAlloc;
+    IAllocController* mPmemKernelCtrl;
+
+};
+#endif
 
 } //end namespace gralloc
 #endif // GRALLOC_ALLOCCONTROLLER_H

@@ -36,7 +36,7 @@
 
 #include <GLES/gl.h>
 
-#include "gralloc_priv.h"
+#include <gralloc_priv.h>
 #include "fb_priv.h"
 #include "gr.h"
 #include <genlock.h>
@@ -152,7 +152,6 @@ static int fb_post(struct framebuffer_device_t* dev, buffer_handle_t buffer)
 static int fb_compositionComplete(struct framebuffer_device_t* dev)
 {
     // TODO: Properly implement composition complete callback
-    glFinish();
 
     return 0;
 }
@@ -208,25 +207,14 @@ int mapFrameBufferLocked(struct private_module_t* module)
         /*
          * Explicitly request RGBA_8888
          */
-#if defined(SEMC_RGBA_8888_OFFSET) || defined(HTC_RGBA_8888_OFFSET)
-        info.red.offset     = 0;
-        info.green.offset   = 8;
-        info.blue.offset    = 16;
-#ifdef SEMC_RGBA_8888_OFFSET
-        info.transp.offset  = 24;
-#else
-        info.transp.offset  = 0;
-#endif
-#else
-        info.red.offset     = 24;
-        info.green.offset   = 16;
-        info.blue.offset    = 8;
-        info.transp.offset  = 0;
-#endif
         info.bits_per_pixel = 32;
+        info.red.offset     = 24;
         info.red.length     = 8;
+        info.green.offset   = 16;
         info.green.length   = 8;
+        info.blue.offset    = 8;
         info.blue.length    = 8;
+        info.transp.offset  = 0;
         info.transp.length  = 8;
 
         /* Note: the GL driver does not have a r=8 g=8 b=8 a=0 config, so if we
@@ -293,6 +281,11 @@ int mapFrameBufferLocked(struct private_module_t* module)
 #endif
 
     uint32_t flags = PAGE_FLIP;
+    if (ioctl(fd, FBIOPUT_VSCREENINFO, &info) == -1) {
+        info.yres_virtual = size / line_length;
+        flags &= ~PAGE_FLIP;
+        ALOGW("FBIOPUT_VSCREENINFO failed, page flipping not supported");
+    }
 
     if (info.yres_virtual < ((size * 2) / line_length) ) {
         // we need at least 2 for page-flipping
@@ -315,7 +308,7 @@ int mapFrameBufferLocked(struct private_module_t* module)
     float xdpi = (info.xres * 25.4f) / info.width;
     float ydpi = (info.yres * 25.4f) / info.height;
     //The reserved[3] field is used to store FPS by the driver.
-    float fps  = info.reserved[3] & 0xFF;
+    float fps  = info.reserved[3];
 
     ALOGI("using (fd=%d)\n"
           "id           = %s\n"
@@ -369,7 +362,7 @@ int mapFrameBufferLocked(struct private_module_t* module)
      */
 
     int err;
-    module->numBuffers = 3;
+    module->numBuffers = info.yres_virtual / info.yres;
     module->bufferMask = 0;
     //adreno needs page aligned offsets. Align the fbsize to pagesize.
     size_t fbSize = roundUpToPageSize(finfo.line_length * info.yres)*

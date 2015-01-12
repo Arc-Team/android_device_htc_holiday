@@ -59,6 +59,7 @@ static ptrdiff_t x;
 
 #ifdef USE_ION
 #include <linux/ion.h>
+//#include <linux/ion.h> //TBD - uncomment this
 //#include <binder/MemoryHeapIon.h>
 //#else
 #endif
@@ -387,7 +388,6 @@ public:
                                 OMX_PTR              appData,
                                 void *               eglImage);
     void complete_pending_buffer_done_cbs();
-    void update_resolution(int width, int height);
     struct video_driver_context drv_ctx;
     int  m_pipe_in;
     int  m_pipe_out;
@@ -826,8 +826,7 @@ private:
     bool secure_mode;
     OMX_QCOM_EXTRADATA_FRAMEINFO *m_extradata;
     bool codec_config_flag;
-    OMX_CONFIG_RECTTYPE rectangle;
-#ifdef _COPPER_
+#ifdef _MSM8974_
     int capture_capability;
     int output_capability;
     bool streaming[MAX_PORT];
