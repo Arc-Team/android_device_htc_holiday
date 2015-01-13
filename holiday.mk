@@ -385,3 +385,8 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 # Device Density
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
+
+# Wifi
+PRODUCT_PACKAGES += \
+	hostapd \
+   	wpa_supplicant
