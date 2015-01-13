@@ -39,7 +39,12 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libOmxQcelp13Enc \
     libOmxEvrcEnc \
-    libOmxAmrEnc
+    libOmxAmrEnc \
+    qcmediaplayer
+
+# QC media player
+PRODUCT_BOOT_JARS += \
+    qcmediaplayer
 
 # MSM8660
 PRODUCT_PACKAGES += \
