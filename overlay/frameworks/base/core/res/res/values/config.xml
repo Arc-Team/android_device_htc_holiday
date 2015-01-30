@@ -202,9 +202,6 @@
     <!-- The VoiceMail default value is displayed to my own number if it is true -->
     <bool name="config_telephony_use_own_number_for_voicemail">true</bool>
 
-    <!-- Device supports LED flashlight -->
-    <bool name="config_enableTorch">true</bool>
-
     <!-- The default iface on which to monitor data use -->
     <string name="config_datause_iface">rmnet_sdio0</string>
 
