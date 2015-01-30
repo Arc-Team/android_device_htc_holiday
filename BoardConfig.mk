@@ -193,3 +193,6 @@ HWUI_COMPILE_FOR_PERF := true
 USE_PREBUILT_CHROMIUM := 1
 # Force using the prebuilts
 PRODUCT_PREBUILT_WEBVIEWCHROMIUM := yes
+
+# Recovery settings for old recoveries
+USE_SET_METADATA := false
