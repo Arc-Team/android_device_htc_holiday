@@ -359,6 +359,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.purgeable_assets=1 \
     dev.pm.dyn_samplingrate=1 \
     ro.opengles.version=131072 \
+    ro.vendor.extension_library=/system/lib/libqc-opt.so \
     ro.bq.gpu_to_cpu_unsupported=1 \
     debug.egl.recordable.rgba8888=1 \
     ro.setupwizard.enable_bypass=1 \
