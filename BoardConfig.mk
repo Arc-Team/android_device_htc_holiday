@@ -189,3 +189,7 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_stora
 
 # Optimization of HWUI
 HWUI_COMPILE_FOR_PERF := true
+
+USE_PREBUILT_CHROMIUM := 1
+# Force using the prebuilts
+# PRODUCT_PREBUILT_WEBVIEWCHROMIUM := yes

@@ -378,3 +378,10 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 # Device Density
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
+
+# Chromium Prebuilt
+ifeq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
+PRODUCT_PACKAGES += \
+ webview
+$(call inherit-product, prebuilts/chromium/$(TARGET_DEVICE)/chromium_prebuilt.mk)
+endif
