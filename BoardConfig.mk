@@ -179,3 +179,6 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_stora
 
 # Recovery settings for old recoveries
 USE_SET_METADATA := false
+
+# Fonts
+EXTENDED_FONT_FOOTPRINT := true
