@@ -76,6 +76,11 @@ PRODUCT_PACKAGES += \
     libsurfaceflinger_client \
     com.android.future.usb.accessory
 
+# Wi-Fi
+PRODUCT_PACKAGES += \
+    hostapd \
+    wpa_supplicant
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
@@ -268,7 +273,7 @@ PRODUCT_COPY_FILES += \
 # Chromatix
 PRODUCT_COPY_FILES += \
     device/htc/holiday/prebuilt/lib/libchromatix_imx105_default_video.so:system/lib/libchromatix_imx105_default_video.so \
-    device/htc/holiday/prebuilt/lib/libchromatix_imx105_preview.so:system/lib/libchromatix_imx105_preview.so \
+    device/htc/holiday/prebuilt/lib/libchromatix_imx105_previeow.so:system/lib/libchromatix_imx105_preview.so \
     device/htc/holiday/prebuilt/lib/libchromatix_imx105_zsl.so:system/lib/libchromatix_imx105_zsl.so \
     device/htc/holiday/prebuilt/lib/libchromatix_mt9d015_default_video.so:system/lib/libchromatix_mt9d015_default_video.so \
     device/htc/holiday/prebuilt/lib/libchromatix_mt9d015_default_zsl.so:system/lib/libchromatix_mt9d015_default_zsl.so \
