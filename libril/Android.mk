@@ -20,6 +20,4 @@ endif
 
 LOCAL_MODULE:= libril
 
-LOCAL_LDLIBS += -lpthread
-
 include $(BUILD_SHARED_LIBRARY)
