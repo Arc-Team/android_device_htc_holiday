@@ -19,6 +19,8 @@ LOCAL_SRC_FILES :=
 
 LOCAL_SHARED_LIBRARIES :=
 
+LOCAL_C_INCLUDES += system/media/camera/include
+
 LOCAL_MODULE := libsurfaceflinger_client
 
 LOCAL_MODULE_TAGS := optional
