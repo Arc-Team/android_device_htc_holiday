@@ -258,13 +258,6 @@ PRODUCT_COPY_FILES += \
     device/htc/holiday/prebuilt/lib/libOlaEngine.so:system/lib/libOlaEngine.so \
     device/htc/holiday/prebuilt/lib/libposteffect.so:system/lib/libposteffect.so
 
-# CamTmpFix
-PRODUCT_COPY_FILES += \
-    device/htc/holiday/prebuilt/app/Camera2.apk:system/app/Camera2.apk \
-    device/htc/holiday/prebuilt/lib/libcamera_client.so:system/lib/libcamera_client.so \
-    device/htc/holiday/prebuilt/lib/libcamera_metadata.so:system/lib/libcamera_metadata.so \
-    device/htc/holiday/prebuilt/lib/libcameraservice.so:system/lib/libcameraservice.so
-
 # Sensors
 PRODUCT_COPY_FILES += \
     device/htc/holiday/prebuilt/lib/libmllite.so:system/lib/libmllite.so \
