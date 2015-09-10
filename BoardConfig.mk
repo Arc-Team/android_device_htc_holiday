@@ -203,3 +203,6 @@ DEVICE_PACKAGE_OVERLAYS += device/htc/holiday/overlay
 
 # USB
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
+
+# Recovery settings for old recoveries
+USE_SET_METADATA := false
